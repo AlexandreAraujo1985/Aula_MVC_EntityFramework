@@ -1,6 +1,5 @@
-﻿using Aula_MVC_EntityFramework.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using Aula_MVC_EntityFramework.Models;
 
 namespace Aula_MVC_EntityFramework.Contrllers
 {
@@ -60,27 +59,27 @@ namespace Aula_MVC_EntityFramework.Contrllers
 		}
 
 
-		//[HttpPost]
-		//public IActionResult Edit(TruckViewModel truckViewModel)
-		//{
-		//	try
-		//	{
-		//		if (ModelState.IsValid)
-		//		{
-		//			var truck = _mapper.Map<Truck>(truckViewModel);
-		//			_truckApplication.Update(truck);
-		//			return RedirectToAction("Index");
-		//		}
+		[HttpPost]
+		public IActionResult Edit(Produto produto)
+		{
+			if (ModelState.IsValid)
+			{
+				var produtosAtualizados = ListarProdutos()
+						.Select(x =>
+						{
+							if (x.Id == produto.Id)
+							{
+								x.Nome = produto.Nome;
+								x.Preco = produto.Preco;
+							}
+							return x;
+						}).ToList();
 
-		//		ViewBag.Message = "Invalid edit truck";
-		//		return View();
-		//	}
-		//	catch (System.Exception)
-		//	{
-		//		ViewBag.Message = "Error edit truck";
-		//		return View();
-		//	}
-		//}
+				return View("Index", produtosAtualizados);
+			}
+
+			return View();
+		}
 
 		[HttpGet]
 		public IActionResult Delete(int id)
@@ -90,26 +89,15 @@ namespace Aula_MVC_EntityFramework.Contrllers
 			return View(produto);
 		}
 
-		//[HttpPost]
-		//public IActionResult Delete(TruckViewModel truckViewModel)
-		//{
-		//	try
-		//	{
-		//		if (ModelState.IsValid)
-		//		{
-		//			var truck = _mapper.Map<Truck>(truckViewModel);
-		//			_truckApplication.Delete(truck);
-		//			return RedirectToAction("Index");
-		//		}
+		[HttpPost]
+		public IActionResult Delete(Produto produto)
+		{
+			var produtos = ListarProdutos();
+			var produtoExcluido = produtos.First(x => x.Id == produto.Id);
 
-		//		ViewBag.Message = "Invalid delete truck";
-		//		return View();
-		//	}
-		//	catch (System.Exception)
-		//	{
-		//		ViewBag.Message = "Error delete truck";
-		//		return View();
-		//	}
-		//}
+			produtos.Remove(produtoExcluido);
+
+			return View("Index", produtos);
+		}
 	}
 }

@@ -31,6 +31,15 @@
 				@Html.DisplayFor(model => model.Preco)
 			</dd>
 		</dl>
+
+		@using (Html.BeginForm(actionName: "delete", controllerName: "produto", method: FormMethod.Post))
+		{
+			@Html.HiddenFor(model => model.Id)
+			<div class="modal-footer m-2">
+				<input type="submit" class="btn btn-primary" value="Excluir" />
+			</div>
+		}
+
 		<div>
 			@Html.ActionLink("Voltar", "Index")
 		</div>
