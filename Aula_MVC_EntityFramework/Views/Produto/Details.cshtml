@@ -1,0 +1,39 @@
+﻿@model Aula_MVC_EntityFramework.Models.Produto
+
+@{
+    ViewData["Title"] = "Detalhar Produto";
+}
+<h1>Details</h1>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <hr />
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Preco)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Preco)
+            </dd>
+        </dl>
+        <div>
+            @Html.ActionLink("Index", "Index")
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>

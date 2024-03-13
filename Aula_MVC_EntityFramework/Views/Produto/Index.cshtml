@@ -32,7 +32,7 @@
 						@Html.DisplayFor(modelItem => produto.Preco)
 					</td>
 					<td>
-						@Html.ActionLink("Editar", "Editar", new { id = produto.Id }) |
+						@Html.ActionLink("Editar", "Edit", new { id = produto.Id }) |
 						@Html.ActionLink("Detalhar", "Detalhar", new { id = produto.Id }) |
 						@Html.ActionLink("Excluir", "Excluir", new { id = produto.Id })
 					</td>
@@ -40,6 +40,10 @@
 			}
 		</tbody>
 	</table>
+
+	<div class="modal-footer">
+		@Html.ActionLink("Adicionar", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+	</div>
 }
 else
 {
