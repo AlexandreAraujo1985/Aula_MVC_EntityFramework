@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Aula_MVC_EntityFramework": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51085;http://localhost:51086"
+    }
+  }
+}
