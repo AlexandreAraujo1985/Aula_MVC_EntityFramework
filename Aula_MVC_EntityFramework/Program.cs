@@ -1,8 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Aula_MVC_EntityFramework.Repositorio.Contexto;
+using System.Configuration;
+
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+var services = new ServiceCollection();
+
+services.AddDbContext<ProdutoContext>();
 
 if (!app.Environment.IsDevelopment())
 {

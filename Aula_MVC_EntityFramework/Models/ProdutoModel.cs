@@ -1,9 +1,8 @@
-﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Aula_MVC_EntityFramework.Models
 {
-	public class Produto
+	public class ProdutoModel
 	{
 		public int Id { get; set; }
 
