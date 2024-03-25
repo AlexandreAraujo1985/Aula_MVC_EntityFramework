@@ -12,9 +12,13 @@ namespace Aula_MVC_EntityFramework.Repositorio.Configuracoes
 
 			builder.HasKey(x => x.Id);
 
+			builder.Property(x => x.Id).HasColumnName("id");
+
 			builder.Property(x => x.Nome).HasColumnName("nome").HasColumnType("varchar(50)");
 
-			builder.Property(x => x.Preco).HasColumnName("preco").HasColumnType("number");
+			builder.Property(x => x.Preco).HasColumnName("preco").HasColumnType("decimal(18,2)");
+
+			builder.Property(x => x.FornecedorId).HasColumnName("fornecedor_id");
 
 			builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro").HasColumnType("datetime");
 		}

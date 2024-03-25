@@ -20,7 +20,7 @@ namespace Aula_MVC_EntityFramework.Contrllers
 
 		public ProdutoController()
 		{
-			produtoRepositorio = new ProdutoRepositorio();
+			produtoRepositorio = new ProdutoRepositorio(new Repositorio.Contexto.ProdutoContext());
 		}
 
 		[HttpGet]

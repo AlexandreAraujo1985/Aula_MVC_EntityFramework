@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework", "Aula_MVC_EntityFramework\Aula_MVC_EntityFramework.csproj", "{752DDECA-0DC0-41CC-B508-FA0811341813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_MVC_EntityFramework.Repositorio", "Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repositorio.csproj", "{9112209B-606A-4598-B5FC-636FCA5DDEFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.Repositorio", "Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repositorio.csproj", "{9112209B-606A-4598-B5FC-636FCA5DDEFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
