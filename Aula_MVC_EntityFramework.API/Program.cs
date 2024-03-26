@@ -1,27 +1,15 @@
-﻿using Aula_MVC_EntityFramework.Repositorio.Contexto;
+﻿var builder = WebApplication.CreateBuilder(args);
 
-var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-var services = new ServiceCollection();
-
-services.AddControllers();
-services.AddSwaggerGen();
-
-services.AddDbContext<ProdutoContext>();
-
 app.UseSwagger();
-
-//app.UseSwaggerUI(c =>
-//{
-//	c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
-//});
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-app.UseRouting();
-
-//app.UseCors("CorsPolicy");
-app.UseStaticFiles();
+app.MapControllers();
 
 app.Run();

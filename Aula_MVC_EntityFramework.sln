@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.Repositorio", "Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repositorio.csproj", "{9112209B-606A-4598-B5FC-636FCA5DDEFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_MVC_EntityFramework.API", "Aula_MVC_EntityFramework.API\Aula_MVC_EntityFramework.API.csproj", "{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9112209B-606A-4598-B5FC-636FCA5DDEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9112209B-606A-4598-B5FC-636FCA5DDEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9112209B-606A-4598-B5FC-636FCA5DDEFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
