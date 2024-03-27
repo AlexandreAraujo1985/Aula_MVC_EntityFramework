@@ -1,0 +1,17 @@
+﻿@using Aula_MVC_EntityFramework.Models
+@model List<ProdutoFornecedorModel>
+
+@{
+    ViewData["Title"] = "ListarProdutosFornecedor";
+}
+
+@foreach (var produtoFornecedor in Model)
+{
+    <div>
+        <label>@produtoFornecedor.ProdutoId</label>
+        <label>@produtoFornecedor.NomeProduto </label>
+        <label>@produtoFornecedor.DataCadastroProduto</label>
+        <label>@produtoFornecedor.NomeFornecedor</label>
+        <label>@produtoFornecedor.DataCadastroFornecedor</label>
+    </div>
+}

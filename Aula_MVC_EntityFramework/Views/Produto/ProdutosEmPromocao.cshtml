@@ -1,0 +1,15 @@
+﻿@using Aula_MVC_EntityFramework.Models
+
+@model List<ProdutoModel>
+
+<div class="container">
+    @foreach (var produtoModel in Model)
+    {
+        <div>
+            <label>@produtoModel.Id: </label>
+            <label>@produtoModel.Nome: </label>
+            <label>@produtoModel.Preco: </label>
+            <label>@produtoModel.DataCadastro.ToString("dd/MM/yyyy") </label>
+        </div>
+    }
+</div>

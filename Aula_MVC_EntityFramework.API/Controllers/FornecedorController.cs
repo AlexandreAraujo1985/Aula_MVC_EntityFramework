@@ -4,7 +4,7 @@ namespace Aula_MVC_EntityFramework.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FornecedorController : ControllerBase
+    public class FornecedorController : Controller
     {
         [HttpGet]
         public IActionResult ListarFornecedores()
@@ -30,7 +30,7 @@ namespace Aula_MVC_EntityFramework.API.Controllers
             return Ok(new[] { new { Id = 1, Nome = "Bic" } });
         }
 
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult ExcluirFornecedores(int id)
         {
             return Ok(new[] { new { Id = 1, Nome = "Bic" } });
