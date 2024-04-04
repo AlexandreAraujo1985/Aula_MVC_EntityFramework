@@ -7,24 +7,23 @@ namespace Aula_MVC_EntityFramework.Contrllers
     public class ProdutoController : Controller
     {
         private ProdutoRepositorio produtoRepositorio;
+        private ForncedorRepositorio forncedorRepositorio;
 
         public ProdutoController()
         {
             produtoRepositorio = new ProdutoRepositorio(new Repositorio.Contexto.ProdutoContext());
+            forncedorRepositorio = new ForncedorRepositorio(new Repositorio.Contexto.ProdutoContext());
         }
 
         [HttpGet]
         public IActionResult ProdutosEmPromocao()
         {
-            //var produtosEmPromocao = produtoRepositorio.ProdutosEmPromocao();
-
-            var produtosEmPromocao = new[]
-            {
-                new ProdutoModel { Id = 1, Nome = "Caneta", DataCadastro = DateTime.Now, Preco = 1.99m },
-                new ProdutoModel { Id = 2, Nome = "Mochila", DataCadastro = DateTime.Now, Preco = 99.00m }
-            }
-            .Where(x => x.Preco < 5.00m)
-            .ToList();
+            var produtosEmPromocao = produtoRepositorio
+                .ProdutosEmPromocao()
+                .Select(x =>
+                {
+                    return new ProdutoModel { Id = x.Id, Nome = x.Nome, DataCadastro = x.DataCadastro, Preco = x.Preco };
+                }).ToList();
 
             return View(produtosEmPromocao);
         }
@@ -32,51 +31,57 @@ namespace Aula_MVC_EntityFramework.Contrllers
         [HttpGet]
         public IActionResult ListarProdutosFornecedor()
         {
-            var produtos = new[]
-            {
-                new ProdutoModel { Id = 1, Nome = "Caneta", DataCadastro = DateTime.Now, Preco = 1.99m },
-                new ProdutoModel { Id = 2, Nome = "Mochila", DataCadastro = DateTime.Now, Preco = 99.00m }
-            };
+            var produtosFornecedor = produtoRepositorio.ListarProdutosFornecedor()
+                .Select(x =>
+                {
+                    return new ProdutoFornecedorModel
+                    {
+                        ProdutoId = x.ProdutoId,
+                        DataCadastroFornecedor = x.DataCadastroFornecedor,
+                        DataCadastroProduto = x.DataCadastroProduto,
+                        NomeFornecedor = x.NomeFornecedor,
+                        NomeProduto = x.NomeProduto
+                    };
+                }).ToList();
 
-            var fornecedores = new[]
-            {
-                new FornecedorModel { Id = 1, Nome = "Bic", Ativo = true, DataCadastro = DateTime.Now },
-                new FornecedorModel { Id = 2, Nome = "Fiap", Ativo = true, DataCadastro = DateTime.Now }
-            };
-
-            var produtosFornecedor = from produto in produtos
-                                     join fornecedor in fornecedores
-                                     on produto.Id equals fornecedor.Id
-                                     select new ProdutoFornecedorModel
-                                     {
-                                         ProdutoId = produto.Id,
-                                         NomeProduto = produto.Nome,
-                                         DataCadastroProduto = produto.DataCadastro,
-                                         NomeFornecedor = fornecedor.Nome,
-                                         DataCadastroFornecedor = fornecedor.DataCadastro
-                                     };
-            return View(produtosFornecedor.ToList());
+            return View(produtosFornecedor);
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            //var listarProdutos = produtoRepositorio.ListarTodos();
+            var listarProdutos = produtoRepositorio
+                .ListarTodos()
+                .Select(x =>
+                {
+                    return new ProdutoModel
+                    {
+                        Id = x.Id,
+                        DataCadastro = x.DataCadastro,
+                        Nome = x.Nome,
+                        Preco = x.Preco
+                    };
+                }).ToList();
 
-            return View(new List<ProdutoModel> { new ProdutoModel { Id = 1, Nome = "Caneta", Preco = 1.99m } });
+            return View();
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var produto = new ProdutoModel
+            var listaForcedores = forncedorRepositorio.ListarTodos().ToList();
+            var produto = new ProdutoModel();
+
+            listaForcedores.ForEach(x =>
             {
-                Fornecedores = new List<FornecedorModel>
+                produto.Fornecedores.Add(new FornecedorModel
                 {
-                    new FornecedorModel { Id = 1, Nome = "Bic", Ativo = true, DataCadastro = DateTime.Now },
-                    new FornecedorModel { Id = 2, Nome = "Fiap", Ativo = true, DataCadastro = DateTime.Now }
-                }
-            };
+                    Ativo = x.Ativo,
+                    DataCadastro = x.DataCadastro,
+                    Id = x.Id,
+                    Nome = x.Nome
+                });
+            });
 
             return View(produto);
         }
@@ -86,7 +91,15 @@ namespace Aula_MVC_EntityFramework.Contrllers
         {
             var produto = produtoRepositorio.PesquisarPorId(id);
 
-            return View(produto);
+            var produtoModel = new ProdutoModel
+            {
+                Id = produto.Id,
+                DataCadastro = produto.DataCadastro,
+                Nome = produto.Nome,
+                Preco = produto.Preco
+            };
+
+            return View();
         }
 
         [HttpPost]
@@ -99,12 +112,24 @@ namespace Aula_MVC_EntityFramework.Contrllers
                     Id = produto.Id,
                     DataCadastro = DateTime.Now,
                     Nome = produto.Nome,
-                    Preco = produto.Preco
+                    Preco = produto.Preco,
+                    FornecedorId = 1
                 });
 
-                var listarProdutos = produtoRepositorio.ListarTodos();
+                var listarProdutos = produtoRepositorio
+                    .ListarTodos()
+                    .Select(x =>
+                    {
+                        return new ProdutoModel
+                        {
+                            Id = x.Id,
+                            DataCadastro = x.DataCadastro,
+                            Nome = x.Nome,
+                            Preco = x.Preco
+                        };
+                    }).ToList();
 
-                return View("Index", listarProdutos.ToList());
+                return View("Index", listarProdutos);
             }
             return View();
         }
@@ -130,21 +155,22 @@ namespace Aula_MVC_EntityFramework.Contrllers
         [HttpPost]
         public IActionResult Edit(ProdutoModel produto)
         {
-            //if (ModelState.IsValid)
-            //{
-            //	var produtosAtualizados = ListarProdutos()
-            //			.Select(x =>
-            //			{
-            //				if (x.Id == produto.Id)
-            //				{
-            //					x.Nome = produto.Nome;
-            //					x.Preco = produto.Preco;
-            //				}
-            //				return x;
-            //			}).ToList();
+            if (ModelState.IsValid)
+            {
+                var produtosAtualizados = produtoRepositorio
+                    .ListarTodos()
+                    .Select(x =>
+                    {
+                        if (x.Id == produto.Id)
+                        {
+                            x.Nome = produto.Nome;
+                            x.Preco = produto.Preco;
+                        }
+                        return x;
+                    }).ToList();
 
-            //	return View("Index", produtosAtualizados);
-            //}
+                return View("Index", produtosAtualizados);
+            }
 
             return View();
         }
@@ -152,22 +178,25 @@ namespace Aula_MVC_EntityFramework.Contrllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            //var produto = ListarProdutos().Find(x => x.Id == id);
+            var produto = produtoRepositorio.PesquisarPorId(id);
 
-            //return View(produto);
-            return View();
+            var produtoModel = new ProdutoModel
+            {
+                Id = produto.Id,
+                Nome = produto.Nome,
+                Preco = produto.Preco,
+                DataCadastro = produto.DataCadastro
+            };
+
+            return View(produtoModel);
         }
 
         [HttpPost]
         public IActionResult Delete(ProdutoModel produto)
         {
-            //var produtos = ListarProdutos();
-            //var produtoExcluido = produtos.First(x => x.Id == produto.Id);
+            produtoRepositorio.Excluir(produto.Id);
 
-            //produtos.Remove(produtoExcluido);
-
-            //return View("Index", produtos);
-            return View();
+            return View("Index");
         }
     }
 }

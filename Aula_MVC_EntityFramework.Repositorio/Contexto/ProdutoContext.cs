@@ -17,8 +17,8 @@ namespace Aula_MVC_EntityFramework.Repositorio.Contexto
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Data Source =.\sqlexpress; Initial Catalog=fiap_entity_framawork; Integrated Security = True; Encrypt=False");
-			//optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;database=library;user=root;password=");
+			//optionsBuilder.UseSqlServer(@"Data Source =.\sqlexpress; Initial Catalog=fiap_entity_framawork; Integrated Security = True; Encrypt=False");
+			optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;database=fiap_entity_framawork;user=root;password=123456");
 		}
 	}
 }

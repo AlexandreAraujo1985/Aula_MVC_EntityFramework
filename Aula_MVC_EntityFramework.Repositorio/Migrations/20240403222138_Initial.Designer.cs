@@ -3,7 +3,6 @@ using System;
 using Aula_MVC_EntityFramework.Repositorio.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aula_MVC_EntityFramework.Repositorio.Migrations
 {
     [DbContext(typeof(ProdutoContext))]
-    [Migration("20240323011055_AlteracaoDataBase")]
-    partial class AlteracaoDataBase
+    [Migration("20240403222138_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +20,7 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.17")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.Fornecedor", b =>
                 {
@@ -32,10 +29,9 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("ativo");
 
                     b.Property<string>("DataCadastro")
                         .IsRequired()
@@ -58,8 +54,6 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime")

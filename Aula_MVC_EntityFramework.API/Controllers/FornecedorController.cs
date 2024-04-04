@@ -1,4 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Aula_MVC_EntityFramework.Repositorio.Repositorios;
+using System.Text.Json.Serialization;
+using System.Net.Http.Json;
+using Newtonsoft.Json;
+using Aula_MVC_EntityFramework.Repositorio.Repositorios.DTOs;
+using Aula_MVC_EntityFramework.Models;
 
 namespace Aula_MVC_EntityFramework.API.Controllers
 {
@@ -6,10 +12,25 @@ namespace Aula_MVC_EntityFramework.API.Controllers
     [ApiController]
     public class FornecedorController : Controller
     {
+        private ForncedorRepositorio fornecedorRepositorio;
+
+        public FornecedorController()
+        {
+            fornecedorRepositorio = new ForncedorRepositorio(new Repositorio.Contexto.ProdutoContext());
+        }
+
         [HttpGet]
         public IActionResult ListarFornecedores()
         {
-            return Ok(new[] { new { Id = 1, Nome = "Bic" } });
+            var client = new HttpClient();
+
+            var result = client.GetAsync("https://jsonplaceholder.typicode.com/todos/1").Result.Content.ReadAsStringAsync().Result;
+            
+            var obj = JsonConvert.DeserializeObject<Livro>(result);
+
+            var fornecedores = fornecedorRepositorio.ListarTodos();
+
+            return Ok(fornecedores);
         }
 
         [HttpGet("{id}")]
@@ -19,7 +40,7 @@ namespace Aula_MVC_EntityFramework.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult IncluirFornecedores([FromBody] object obj)
+        public IActionResult IncluirFornecedores([FromBody] FornecedorModel fornecedorModel)
         {
             return Ok(new[] { new { Id = 1, Nome = "Bic" } });
         }

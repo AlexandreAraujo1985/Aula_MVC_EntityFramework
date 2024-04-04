@@ -18,6 +18,8 @@ namespace Aula_MVC_EntityFramework.Repositorio.Configuracoes
 
 			builder.Property(x => x.DataCadastro).HasColumnName("data_cadastro").HasColumnType("varchar(50)");
 
+			builder.Property(x => x.Ativo).HasColumnName("ativo");
+
 			builder.HasMany(x => x.Produtos).WithOne(x => x.Fornecedor).HasForeignKey(x => x.FornecedorId).HasPrincipalKey(x => x.Id);
 		}
 	}

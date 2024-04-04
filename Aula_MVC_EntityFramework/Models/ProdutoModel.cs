@@ -17,6 +17,6 @@ namespace Aula_MVC_EntityFramework.Models
         [Display(Name = "Data Cadastro")]
         public DateTime DataCadastro { get; set; }
 
-        public List<FornecedorModel> Fornecedores { get; set; }
+        public List<FornecedorModel> Fornecedores { get; set; } = new List<FornecedorModel>();
     }
 }
