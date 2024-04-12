@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aula_MVC_EntityFramework.Repositorio.Migrations
 {
     [DbContext(typeof(ProdutoContext))]
-    [Migration("20240403222138_Initial")]
-    partial class Initial
+    [Migration("20240409064946_Ajuste")]
+    partial class Ajuste
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,11 +72,45 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("preco");
 
+                    b.Property<decimal?>("PrecoPromocional")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("preco_promocional");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FornecedorId");
 
                     b.ToTable("tb_produto", (string)null);
+                });
+
+            modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.ProdutoEmPromocao", b =>
+                {
+                    b.Property<int>("ProdutoEmPromocaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime")
+                        .HasColumnName("data_fim");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime")
+                        .HasColumnName("data_inicio");
+
+                    b.Property<decimal>("PrecoPromocional")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("preco_promocional");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int")
+                        .HasColumnName("produto_id");
+
+                    b.HasKey("ProdutoEmPromocaoId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("tb_produto_em_promocao", (string)null);
                 });
 
             modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.Produto", b =>
@@ -90,9 +124,25 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
                     b.Navigation("Fornecedor");
                 });
 
+            modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.ProdutoEmPromocao", b =>
+                {
+                    b.HasOne("Aula_MVC_EntityFramework.Repositorio.Entidades.Produto", "Produto")
+                        .WithMany("ProdutosEmPromocao")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
+                });
+
             modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.Fornecedor", b =>
                 {
                     b.Navigation("Produtos");
+                });
+
+            modelBuilder.Entity("Aula_MVC_EntityFramework.Repositorio.Entidades.Produto", b =>
+                {
+                    b.Navigation("ProdutosEmPromocao");
                 });
 #pragma warning restore 612, 618
         }

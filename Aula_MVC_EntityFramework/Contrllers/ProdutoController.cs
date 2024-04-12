@@ -19,7 +19,7 @@ namespace Aula_MVC_EntityFramework.Contrllers
         public IActionResult ProdutosEmPromocao()
         {
             var produtosEmPromocao = produtoRepositorio
-                .ProdutosEmPromocao()
+                .ListarOsProdutosEmPromocao()
                 .Select(x =>
                 {
                     return new ProdutoModel { Id = x.Id, Nome = x.Nome, DataCadastro = x.DataCadastro, Preco = x.Preco };

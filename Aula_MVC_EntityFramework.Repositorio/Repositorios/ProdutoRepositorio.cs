@@ -10,11 +10,6 @@ namespace Aula_MVC_EntityFramework.Repositorio.Repositorios
         {
         }
 
-        public List<Produto> ProdutosEmPromocao()
-        {
-            return _produtoContext.Produtos.Where(x => x.Preco < 5.00m).ToList();
-        }
-
         public List<ProdutosFornecedorDTO> ListarProdutosFornecedor()
         {
             var listarProdutosFornecedor = from produto in _produtoContext.Produtos.ToList()
@@ -30,6 +25,52 @@ namespace Aula_MVC_EntityFramework.Repositorio.Repositorios
                                            };
 
             return listarProdutosFornecedor.ToList();
+        }
+
+        public List<ProtudoDTO> ListarOsProdutosEmPromocao()
+        {
+
+            var produtosEmPromocao = from produto in _produtoContext.Produtos.ToList()
+                                     join produtoEmPromocao in _produtoContext.ProdutosEmPromocao.ToList()
+                                     on produto.Id equals produtoEmPromocao.ProdutoId
+                                     select new ProtudoDTO
+                                     {
+                                         Id = produto.Id,
+                                         DataCadastro = produto.DataCadastro,
+                                         Preco = produto.Preco,
+                                         PrecoPromocional = produtoEmPromocao.PrecoPromocional,
+                                         DataInicio = produtoEmPromocao.DataInicio,
+                                         DataFim = produtoEmPromocao.DataFim
+                                     };
+
+            return produtosEmPromocao.ToList();
+        }
+
+        public Produto FiltarPorNome(string nome) 
+        {
+            var produto = _produtoContext.Produtos.ToList().FirstOrDefault(x => x.Nome.Contains(nome));
+
+            return produto;
+        }
+
+        public List<ProtudoDTO> ListarOsProdutosComESemPromocao()
+        {
+
+            var produtosEmPromocao = from produto in _produtoContext.Produtos.ToList()
+                                     join produtoEmPromocao in _produtoContext.ProdutosEmPromocao.ToList()
+                                     on produto.Id equals produtoEmPromocao.ProdutoId
+                                     into produtosComESemPromocao
+                                     select new ProtudoDTO
+                                     {
+                                         Id = produto.Id,
+                                         DataCadastro = produto.DataCadastro,
+                                         Preco = produto.Preco,
+                                         PrecoPromocional = produtosComESemPromocao.FirstOrDefault()?.PrecoPromocional,
+                                         DataInicio = produtosComESemPromocao.FirstOrDefault()?.DataInicio,
+                                         DataFim = produtosComESemPromocao.FirstOrDefault()?.DataFim
+                                     };
+
+            return produtosEmPromocao.ToList();
         }
     }
 }

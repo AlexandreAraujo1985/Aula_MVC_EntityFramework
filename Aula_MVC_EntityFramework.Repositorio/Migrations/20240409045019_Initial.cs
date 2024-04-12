@@ -40,7 +40,8 @@ namespace Aula_MVC_EntityFramework.Repositorio.Migrations
                     nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     data_cadastro = table.Column<DateTime>(type: "datetime", nullable: false),
-                    fornecedor_id = table.Column<int>(type: "int", nullable: false)
+                    fornecedor_id = table.Column<int>(type: "int", nullable: false),
+                    preco_promocional = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
                 },
                 constraints: table =>
                 {
