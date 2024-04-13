@@ -130,22 +130,22 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		{
 			var produtoEntity = produtoRepositorio.PesquisarPorId(produto.Id);
 
-			if (produto.Nome.ToUpper() != produtoEntity.Nome.ToUpper())
+			//if (produto.Nome.ToUpper() != produtoEntity.Nome.ToUpper())
+			//{
+			if (ModelState.IsValid)
 			{
-				if (ModelState.IsValid)
+				produtoRepositorio.Incluir(new Produto
 				{
-					produtoRepositorio.Incluir(new Produto
-					{
-						Id = produto.Id,
-						DataCadastro = DateTime.Now,
-						Nome = produto.Nome,
-						Preco = produto.Preco,
-						FornecedorId = produto.FornecedorId,
-					});
+					Id = produto.Id,
+					DataCadastro = DateTime.Now,
+					Nome = produto.Nome,
+					Preco = produto.Preco,
+					FornecedorId = produto.FornecedorId,
+				});
 
-					return RedirectToAction("Index");
-				}
+				return RedirectToAction("Index");
 			}
+			//}
 
 			ViewData["Mensagem"] = $"O produto:{produto.Nome}. Já existe!!!";
 
