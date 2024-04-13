@@ -1,7 +1,7 @@
-﻿@model Aula_MVC_EntityFramework.Models.ProdutoModel
+﻿@model Aula_MVC_EntityFramework.MVC.Models.ProdutoModel
 
 @{
-    ViewData["Title"] = "Criar ProdutoModel";
+	ViewData["Title"] = "Criar ProdutoModel";
 }
 
 <h1>Create</h1>
@@ -9,41 +9,48 @@
 <h4>Incluir Produto</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="modal-body">
-            @using (Html.BeginForm(actionName: "create", controllerName: "produto", method: FormMethod.Post))
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Nome, new { @class = "col-form-label" }):
-                    @Html.EditorFor(x => x.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do produto", min = "1" } })
-                    <span>
-                        @Html.ValidationMessageFor(x => x.Nome, null, new { @class = "text-danger" })
-                    </span>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(x => x.Preco, new { @class = "col-form-label" }):
-                    @Html.EditorFor(x => x.Preco, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", step = "any" } })
-                    <span>
-                        @Html.ValidationMessageFor(x => x.Preco, null, new { @class = "text-danger" })
-                    </span>
-                </div>
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+		<div class="modal-body">
+			@using (Html.BeginForm(actionName: "create", controllerName: "produto", method: FormMethod.Post))
+			{
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				<div class="form-group">
+					@Html.LabelFor(x => x.Nome, new { @class = "col-form-label" }):
+					@Html.EditorFor(x => x.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do produto", min = "1" } })
+					<span>
+						@Html.ValidationMessageFor(x => x.Nome, null, new { @class = "text-danger" })
+					</span>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(x => x.Preco, new { @class = "col-form-label" }):
+					@Html.EditorFor(x => x.Preco, new { htmlAttributes = new { @class = "form-control", type = "decimal", min = "1", step = "any" } })
+					<span>
+						@Html.ValidationMessageFor(x => x.Preco, null, new { @class = "text-danger" })
+					</span>
+				</div>
 
-                <div>
-                    <label class="col-form-label"> Fornecedores: </label>
-                    @Html.DropDownList("Fornecedor.Id", new SelectList(Model.Fornecedores, "Id", "Nome"), new { @class = "form-control" })
-                </div>
+				<div>
+					<label class="col-form-label"> Fornecedores: </label>
+					@Html.DropDownList("FornecedorId", new SelectList(Model.Fornecedores, "Id", "Nome"), new { @class = "form-control" })
+				</div>
 
-                <div class="modal-footer m-2">
-                    <input type="submit" class="btn btn-primary" value="Create" />
-                </div>
-            }
-        </div>
-    </div>
-    <div class="col-md-4"></div>
+				<div class="modal-footer m-2">
+					<input type="submit" class="btn btn-primary" value="Create" />
+				</div>
+			}
+
+			<div class="container">
+				@if (!string.IsNullOrEmpty(ViewData["Mensagem"]?.ToString()))
+				{
+					@ViewData["Mensagem"]
+				}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4"></div>
 </div>
 
 <div>
-    @Html.ActionLink("Voltar", "Index")
+	@Html.ActionLink("Voltar", "Index")
 </div>

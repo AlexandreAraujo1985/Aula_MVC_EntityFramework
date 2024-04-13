@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Aula_MVC_EntityFramework.Repositorio.Repositorios;
-using System.Text.Json.Serialization;
-using System.Net.Http.Json;
 using Newtonsoft.Json;
 using Aula_MVC_EntityFramework.Repositorio.Repositorios.DTOs;
-using Aula_MVC_EntityFramework.Models;
+using Aula_MVC_EntityFramework.API.Model;
 
 namespace Aula_MVC_EntityFramework.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class FornecedorController : Controller
     {

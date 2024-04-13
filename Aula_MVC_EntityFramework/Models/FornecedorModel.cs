@@ -1,4 +1,4 @@
-﻿namespace Aula_MVC_EntityFramework.Models
+﻿namespace Aula_MVC_EntityFramework.MVC.Models
 {
     public class FornecedorModel
     {

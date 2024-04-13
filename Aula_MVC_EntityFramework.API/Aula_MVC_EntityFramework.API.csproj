@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repositorio.csproj" />
-	  <ProjectReference Include="..\Aula_MVC_EntityFramework\Aula_MVC_EntityFramework.csproj" />
 	</ItemGroup>
 
 </Project>

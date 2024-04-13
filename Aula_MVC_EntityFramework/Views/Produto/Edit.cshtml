@@ -1,4 +1,4 @@
-﻿@model Aula_MVC_EntityFramework.Models.ProdutoModel
+﻿@model Aula_MVC_EntityFramework.MVC.Models.ProdutoModel
 
 @{
 	ViewData["Title"] = "Alterar ProdutoModel";
@@ -17,6 +17,7 @@
 				@Html.ValidationSummary(true, null, new { @class = "text-danger" })
 				<div class="form-group">
 					@Html.HiddenFor(model => model.Id)
+					@Html.HiddenFor(x => x.FornecedorId)
 					@Html.LabelFor(x => x.Nome, new { @class = "col-form-label" }):
 					@Html.EditorFor(x => x.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do produto", min = "1" } })
 					<span>

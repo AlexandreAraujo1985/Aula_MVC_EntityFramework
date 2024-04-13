@@ -1,51 +1,54 @@
-﻿@using Aula_MVC_EntityFramework.Models
+﻿@using Aula_MVC_EntityFramework.MVC.Models
 @model List<ProdutoModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <h2>Lista de Produtos</h2>
 
 @if (Model != null && Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Preço
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var produto in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => produto.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => produto.Preco)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = produto.Id }) |
-                        @Html.ActionLink("Detalhar", "Details", new { id = produto.Id }) |
-                        @Html.ActionLink("Excluir", "Delete", new { id = produto.Id })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.ActionLink("Nome", "Index", new { ordenarDados = ViewData["NomeOrdenado"] }, htmlAttributes: new { @class = "nav-link text-dark" })
+				</th>
+				<th>
+					@Html.ActionLink(linkText: "Preço",
+					actionName: "Index", 
+					routeValues: new { ordenarDados = ViewData["PrecoOrdenado"] }, 
+					htmlAttributes: new { @class="nav-link text-dark" })
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var produto in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => produto.Nome)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => produto.Preco)
+					</td>
+					<td>
+						@Html.ActionLink("Editar", "Edit", new { id = produto.Id }) |
+						@Html.ActionLink("Detalhar", "Details", new { id = produto.Id }) |
+						@Html.ActionLink("Excluir", "Delete", new { id = produto.Id })
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }
 else
 {
-    <p>Nenhum produto encontrado.</p>
+	<p>Nenhum produto encontrado.</p>
 }
 
 <div class="modal-footer">
-    @Html.ActionLink("Adicionar", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+	@Html.ActionLink("Adicionar", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
 </div>
