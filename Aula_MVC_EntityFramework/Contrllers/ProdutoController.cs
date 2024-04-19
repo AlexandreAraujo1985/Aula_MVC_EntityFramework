@@ -49,10 +49,13 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		}
 
 		[HttpGet]
-		public IActionResult Index(string ordenarDados)
+		public IActionResult Index(string ordenarDados, string pesquisarProduto, int numeroPaginas)
 		{
 			ViewData["NomeOrdenado"] = string.IsNullOrEmpty(ordenarDados) ? "nome_desc" : "";
 			ViewData["PrecoOrdenado"] = ordenarDados == "preco" ? "preco_desc" : "preco";
+			ViewData["NomeDoProduto"] = pesquisarProduto;
+
+			ViewBag.Dados = new { OrdenarDados = ordenarDados, PesquisarProduto = pesquisarProduto };
 
 			var listaDeProdutos = produtoRepositorio
 				.ListarTodos()
@@ -66,6 +69,11 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 						Preco = x.Preco
 					};
 				}).ToList();
+
+			if (!string.IsNullOrEmpty(pesquisarProduto))
+			{
+				listaDeProdutos = listaDeProdutos.Where(x => x.Nome.ToUpper().Contains(pesquisarProduto.ToUpper())).ToList();
+			}
 
 			switch (ordenarDados)
 			{
@@ -86,7 +94,9 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 					break;
 			}
 
-			return View(listaDeProdutos);
+			var limitePaginas = 2;
+
+			return View(Paginador<ProdutoModel>.CriarPaginacao(listaDeProdutos.AsQueryable(), numeroPaginas, limitePaginas));
 		}
 
 		[HttpGet]

@@ -1,5 +1,6 @@
-﻿@using Aula_MVC_EntityFramework.MVC.Models
-@model List<ProdutoModel>
+﻿@using Aula_MVC_EntityFramework.MVC
+@using Aula_MVC_EntityFramework.MVC.Models
+@model Paginador<ProdutoModel>
 
 @{
 	ViewData["Title"] = "Home Page";
@@ -9,19 +10,40 @@
 
 @if (Model != null && Model.Any())
 {
+	@using (Html.BeginForm(actionName: "Index", controllerName: "Produto", FormMethod.Get))
+	{
+		<div class="form-action no-color">
+			<p>
+				Filtrar por nome: <input type="text" name="pesquisarProduto" value="@ViewData["NomeDoProduto"]" />
+				<input type="submit" value="Pesquisar" class="btn btn-primary" />
+			</p>
+		</div>
+	}
+
 	<table class="table">
 		<thead>
 			<tr>
 				<th>
-					@Html.ActionLink("Nome", "Index", new { ordenarDados = ViewData["NomeOrdenado"] }, htmlAttributes: new { @class = "nav-link text-dark" })
+					@Html.ActionLink("Nome",
+										"Index",
+										new
+										{
+											ordenarDados = ViewData["NomeOrdenado"]
+										},
+										htmlAttributes: new { @class = "nav-link text-dark" })
 				</th>
 				<th>
 					@Html.ActionLink(linkText: "Preço",
-					actionName: "Index", 
-					routeValues: new { ordenarDados = ViewData["PrecoOrdenado"] }, 
-					htmlAttributes: new { @class="nav-link text-dark" })
+										actionName: "Index",
+										routeValues: new { ordenarDados = ViewData["PrecoOrdenado"] },
+										htmlAttributes: new { @class = "nav-link text-dark" })
 				</th>
-				<th></th>
+				<th>
+					@Html.ActionLink(linkText: "Preço",
+										actionName: "Index",
+										routeValues: new { ordenarDados = ViewData["PrecoOrdenado"] },
+										htmlAttributes: new { @class = "nav-link text-dark" })
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,6 +65,23 @@
 			}
 		</tbody>
 	</table>
+
+	var desabilitarAnterior = !Model.TemPaginaAnterior ? "none" : "";
+	var desabilitarProxima = !Model.TemProximaPagina ? "none" : "";
+
+	@Html.ActionLink("Anterior", "Index", new
+		{
+			ordenarDados = ViewBag.Dados.OrdenarDados,
+			pesquisarProduto = ViewBag.Dados.PesquisarProduto,
+			numeroPaginas = Model.PaginaInicial - 1
+		}, new { @class = "btn btn-primary", style = $"pointer-events:{desabilitarAnterior}" })
+
+	@Html.ActionLink("Próxima", "Index", new
+		{
+			ordenarDados = ViewBag.Dados.OrdenarDados,
+			pesquisarProduto = ViewBag.Dados.PesquisarProduto,
+			numeroPaginas = Model.PaginaInicial + 1
+		}, new { @class = "btn btn-primary", style = $"pointer-events:{desabilitarProxima}" })
 }
 else
 {
