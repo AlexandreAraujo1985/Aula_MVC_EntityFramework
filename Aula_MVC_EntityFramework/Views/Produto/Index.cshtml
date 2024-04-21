@@ -8,6 +8,19 @@
 
 <h2>Lista de Produtos</h2>
 
+<p>
+	Model: @Model.TemPaginaAnterior
+</p>
+<p>
+	ViewData: @ViewData["ProdutoModel"]
+</p>
+<p>
+	ViewBag: @ViewBag.ProdutoModel.Id
+</p>
+<p>
+	TempData: @TempData["MensagemCadastro"]
+</p>
+
 @if (Model != null && Model.Any())
 {
 	@using (Html.BeginForm(actionName: "Index", controllerName: "Produto", FormMethod.Get))
@@ -44,6 +57,10 @@
 										routeValues: new { ordenarDados = ViewData["PrecoOrdenado"] },
 										htmlAttributes: new { @class = "nav-link text-dark" })
 				</th>
+				<th>
+					Data Cadastro
+				</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -54,12 +71,16 @@
 						@Html.DisplayFor(modelItem => produto.Nome)
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => produto.Preco)
+						@* @Html.DisplayFor(modelItem => produto.Preco) *@
+						@produto.Preco
 					</td>
 					<td>
-						@Html.ActionLink("Editar", "Edit", new { id = produto.Id }) |
-						@Html.ActionLink("Detalhar", "Details", new { id = produto.Id }) |
-						@Html.ActionLink("Excluir", "Delete", new { id = produto.Id })
+						@*  @Html.DisplayFor(modelItem => produto.DataCadastro.FormatarData())</td> *@
+						@produto.DataCadastro.FormatarData()
+					<td>
+							@Html.ActionLink("Editar", "Edit", new { id = produto.Id }) |
+							@Html.ActionLink("Detalhar", "Details", new { id = produto.Id }) |
+							@Html.ActionLink("Excluir", "Delete", new { id = produto.Id })
 					</td>
 				</tr>
 			}
@@ -91,3 +112,8 @@ else
 <div class="modal-footer">
 	@Html.ActionLink("Adicionar", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
 </div>
+
+@if (TempData.Peek("MensagemCadastro") != null)
+{
+	<h1>Mensagem Cadastro:  @TempData.Peek("MensagemCadastro")</h1>
+}

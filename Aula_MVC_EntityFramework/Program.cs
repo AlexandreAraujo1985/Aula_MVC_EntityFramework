@@ -5,6 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(x =>
+{
+	x.IOTimeout = TimeSpan.FromSeconds(5);
+	x.Cookie.HttpOnly = true;
+	x.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 var services = new ServiceCollection();
@@ -28,6 +37,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 // Adiciona middleware para definir as rotas da aplicação
 app.MapControllerRoute(

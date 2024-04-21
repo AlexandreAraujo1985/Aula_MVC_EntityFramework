@@ -51,6 +51,9 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		[HttpGet]
 		public IActionResult Index(string ordenarDados, string pesquisarProduto, int numeroPaginas)
 		{
+			ViewData["ProdutoModel"] = new ProdutoModel { Id = 1, Nome = "Caderno" };
+			ViewBag.ProdutoModel = new ProdutoModel { Id = 1, Nome = "Caderno" };
+
 			ViewData["NomeOrdenado"] = string.IsNullOrEmpty(ordenarDados) ? "nome_desc" : "";
 			ViewData["PrecoOrdenado"] = ordenarDados == "preco" ? "preco_desc" : "preco";
 			ViewData["NomeDoProduto"] = pesquisarProduto;
@@ -138,28 +141,32 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		[HttpPost]
 		public IActionResult Create(ProdutoModel produto)
 		{
-			var produtoEntity = produtoRepositorio.PesquisarPorId(produto.Id);
+			TempData["MensagemCadastro"] = string.Empty;
 
-			//if (produto.Nome.ToUpper() != produtoEntity.Nome.ToUpper())
-			//{
-			if (ModelState.IsValid)
+			var produtoEntity = produtoRepositorio.PesquisarPorNome(produto.Nome);
+
+			if (produtoEntity.Id == 0)
 			{
-				produtoRepositorio.Incluir(new Produto
+				if (ModelState.IsValid)
 				{
-					Id = produto.Id,
-					DataCadastro = DateTime.Now,
-					Nome = produto.Nome,
-					Preco = produto.Preco,
-					FornecedorId = produto.FornecedorId,
-				});
+					produtoRepositorio.Incluir(new Produto
+					{
+						Id = produto.Id,
+						DataCadastro = DateTime.Now,
+						Nome = produto.Nome,
+						Preco = produto.Preco,
+						FornecedorId = produto.FornecedorId,
+					});
 
-				return RedirectToAction("Index");
+					return RedirectToAction("Index");
+				}
 			}
-			//}
+			else
+			{
+				TempData["MensagemCadastro"] = $"O produto:{produto.Nome}. Já existe!!!";
+			}
 
-			ViewData["Mensagem"] = $"O produto:{produto.Nome}. Já existe!!!";
-
-			return View();
+			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
@@ -179,7 +186,6 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 
 			return View(produtoViewModel);
 		}
-
 
 		[HttpPost]
 		public IActionResult Edit(ProdutoModel produto)
