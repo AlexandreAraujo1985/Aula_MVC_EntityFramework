@@ -1,9 +1,12 @@
 ﻿using Aula_MVC_EntityFramework.Repositorio.Contexto;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+	.AddRazorOptions(options =>
+	{
+		options.ViewLocationFormats.Add("/{0}.cshtml");
+	});
 
 builder.Services.AddDistributedMemoryCache();
 

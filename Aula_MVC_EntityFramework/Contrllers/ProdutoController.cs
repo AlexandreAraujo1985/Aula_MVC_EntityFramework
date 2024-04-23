@@ -49,57 +49,56 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		}
 
 		[HttpGet]
-		public IActionResult Index(string ordenarDados, string pesquisarProduto, int numeroPaginas)
+		public IActionResult Index(string ordenarDados, string pesquisarProduto, int numeroPaginas = 1)
 		{
-			ViewData["ProdutoModel"] = new ProdutoModel { Id = 1, Nome = "Caderno" };
-			ViewBag.ProdutoModel = new ProdutoModel { Id = 1, Nome = "Caderno" };
-
 			ViewData["NomeOrdenado"] = string.IsNullOrEmpty(ordenarDados) ? "nome_desc" : "";
 			ViewData["PrecoOrdenado"] = ordenarDados == "preco" ? "preco_desc" : "preco";
 			ViewData["NomeDoProduto"] = pesquisarProduto;
 
+			ViewData["NumeroPaginas"] = numeroPaginas;
+
 			ViewBag.Dados = new { OrdenarDados = ordenarDados, PesquisarProduto = pesquisarProduto };
 
-			var listaDeProdutos = produtoRepositorio
-				.ListarTodos()
-				.Select(x =>
-				{
-					return new ProdutoModel
-					{
-						Id = x.Id,
-						DataCadastro = x.DataCadastro,
-						Nome = x.Nome,
-						Preco = x.Preco
-					};
-				}).ToList();
+			//var listaDeProdutos = produtoRepositorio
+			//	.ListarTodos()
+			//	.Select(x =>
+			//	{
+			//		return new ProdutoModel
+			//		{
+			//			Id = x.Id,
+			//			DataCadastro = x.DataCadastro,
+			//			Nome = x.Nome,
+			//			Preco = x.Preco
+			//		};
+			//	}).ToList();
 
-			if (!string.IsNullOrEmpty(pesquisarProduto))
-			{
-				listaDeProdutos = listaDeProdutos.Where(x => x.Nome.ToUpper().Contains(pesquisarProduto.ToUpper())).ToList();
-			}
+			//if (!string.IsNullOrEmpty(pesquisarProduto))
+			//{
+			//	listaDeProdutos = listaDeProdutos.Where(x => x.Nome.ToUpper().Contains(pesquisarProduto.ToUpper())).ToList();
+			//}
 
-			switch (ordenarDados)
-			{
-				case "nome_desc":
-					listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Nome).ToList();
-					break;
+			//switch (ordenarDados)
+			//{
+			//	case "nome_desc":
+			//		listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Nome).ToList();
+			//		break;
 
-				case "preco":
-					listaDeProdutos = listaDeProdutos.OrderBy(x => x.Preco).ToList();
-					break;
+			//	case "preco":
+			//		listaDeProdutos = listaDeProdutos.OrderBy(x => x.Preco).ToList();
+			//		break;
 
-				case "preco_desc":
-					listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Preco).ToList();
-					break;
+			//	case "preco_desc":
+			//		listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Preco).ToList();
+			//		break;
 
-				default:
-					listaDeProdutos = listaDeProdutos.OrderBy(x => x.Nome).ToList();
-					break;
-			}
+			//	default:
+			//		listaDeProdutos = listaDeProdutos.OrderBy(x => x.Nome).ToList();
+			//		break;
+			//}
 
-			var limitePaginas = 2;
-
-			return View(Paginador<ProdutoModel>.CriarPaginacao(listaDeProdutos.AsQueryable(), numeroPaginas, limitePaginas));
+			var limitePaginas = 6;
+			return View();
+			//return View(Paginador<ProdutoModel>.CriarPaginacao(listaDeProdutos.AsQueryable(), numeroPaginas, limitePaginas));
 		}
 
 		[HttpGet]

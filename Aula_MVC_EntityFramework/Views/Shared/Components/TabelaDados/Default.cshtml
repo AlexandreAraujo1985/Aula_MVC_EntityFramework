@@ -1,0 +1,72 @@
+﻿@using Aula_MVC_EntityFramework.MVC
+@using Aula_MVC_EntityFramework.MVC.Models
+@model Paginador<TabelaDadosBaseModel>
+
+@if (Model != null && Model.Any())
+{
+	@using (Html.BeginForm(actionName: "Index", controllerName: ViewData["NameController"] as string, FormMethod.Get))
+	{
+		<div class="form-action no-color">
+			<p>
+				Filtrar por nome: <input type="text" name="pesquisarProduto" value="@ViewData["NomeDoProduto"]" />
+				<input type="submit" value="Pesquisar" class="btn btn-primary" />
+			</p>
+		</div>
+	}
+	<table class="table">
+		<thead>
+			<tr>
+				@for (int i = 0; i < Model.FirstOrDefault()?.Itens?.Count; i++)
+				{
+					<th>@Model.FirstOrDefault()?.Itens.Keys.ToArray()[i]</th>
+				}
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var obj in Model)
+			{
+				<tr>
+					@foreach (var item in obj.Itens)
+					{
+						<td>@item.Value	</td>
+					}
+					<td>
+						@Html.ActionLink("Editar", "Edit", new { id = obj.Id }) |
+						@Html.ActionLink("Detalhar", "Details", new { id = obj.Id }) |
+						@Html.ActionLink("Excluir", "Delete", new { id = obj.Id })
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	var desabilitarAnterior = !Model.TemPaginaAnterior ? "none" : "";
+	var desabilitarProxima = !Model.TemProximaPagina ? "none" : "";
+
+	@Html.ActionLink("Anterior", "Index", new
+		{
+			ordenarDados = ViewBag.Dados.OrdenarDados,
+			pesquisarProduto = ViewBag.Dados.PesquisarProduto,
+			numeroPaginas = Model.PaginaInicial - 1
+		}, new { @class = "btn btn-primary", style = $"pointer-events:{desabilitarAnterior}" })
+
+	@Html.ActionLink("Próxima", "Index", new
+		{
+			ordenarDados = ViewBag.Dados.OrdenarDados,
+			pesquisarProduto = ViewBag.Dados.PesquisarProduto,
+			numeroPaginas = Model.PaginaInicial + 1
+		}, new { @class = "btn btn-primary", style = $"pointer-events:{desabilitarProxima}" })
+}
+else
+{
+	<p>Nenhum produto encontrado.</p>
+}
+
+<div class="modal-footer">
+	@Html.ActionLink("Adicionar", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>
+
+
+<p>
+	@TempData["MensagemCadastro"]
+</p>

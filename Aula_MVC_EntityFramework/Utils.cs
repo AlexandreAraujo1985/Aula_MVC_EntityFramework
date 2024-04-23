@@ -9,9 +9,9 @@ namespace Aula_MVC_EntityFramework.MVC
 			return data.ToString("dd/MM/yyyy");
 		}
 
-		//public static string FormatarMoeda(this decimal valor)
-		//{
-		//	return string.Format(CultureInfo.GetCultureInfo("pt-BR") + "{C:0}", valor);
-		//}
+		public static string FormatarMoeda(this decimal valor)
+		{
+			return string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", valor);
+		}
 	}
 }
