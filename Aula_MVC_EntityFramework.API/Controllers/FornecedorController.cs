@@ -10,11 +10,11 @@ namespace Aula_MVC_EntityFramework.API.Controllers
     [ApiController]
     public class FornecedorController : Controller
     {
-        private ForncedorRepositorio fornecedorRepositorio;
+        private FornecedorRepositorio fornecedorRepositorio;
 
         public FornecedorController()
         {
-            fornecedorRepositorio = new ForncedorRepositorio(new Repositorio.Contexto.ProdutoContext());
+            fornecedorRepositorio = new FornecedorRepositorio(new Repositorio.Contexto.ProdutoContext());
         }
 
         [HttpGet]

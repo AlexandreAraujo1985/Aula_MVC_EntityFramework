@@ -4,9 +4,9 @@ using Aula_MVC_EntityFramework.Repositorio.Repositorios.DTOs;
 
 namespace Aula_MVC_EntityFramework.Repositorio.Repositorios
 {
-    public class ForncedorRepositorio : RepositorioBase<Fornecedor>
+    public class FornecedorRepositorio : RepositorioBase<Fornecedor>
     {
-        public ForncedorRepositorio(ProdutoContext produtoContext) : base(produtoContext)
+        public FornecedorRepositorio(ProdutoContext produtoContext) : base(produtoContext)
         {
         }
 

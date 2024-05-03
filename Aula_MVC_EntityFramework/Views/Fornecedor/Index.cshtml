@@ -1,0 +1,8 @@
+﻿@using Aula_MVC_EntityFramework.MVC.ViewComponents
+@{
+	ViewData["Title"] = "Fornecedor";
+}
+
+<h2>Fornecedor</h2>
+
+@await Component.InvokeAsync(nameof(TabelaDados), new { tipoDados = "Fornecedor" })

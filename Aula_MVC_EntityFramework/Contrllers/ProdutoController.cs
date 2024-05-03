@@ -8,12 +8,12 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 	public class ProdutoController : Controller
 	{
 		private ProdutoRepositorio produtoRepositorio;
-		private ForncedorRepositorio forncedorRepositorio;
+		private FornecedorRepositorio forncedorRepositorio;
 
 		public ProdutoController()
 		{
 			produtoRepositorio = new ProdutoRepositorio(new Repositorio.Contexto.ProdutoContext());
-			forncedorRepositorio = new ForncedorRepositorio(new Repositorio.Contexto.ProdutoContext());
+			forncedorRepositorio = new FornecedorRepositorio(new Repositorio.Contexto.ProdutoContext());
 		}
 
 		[HttpGet]
@@ -59,46 +59,7 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 
 			ViewBag.Dados = new { OrdenarDados = ordenarDados, PesquisarProduto = pesquisarProduto };
 
-			//var listaDeProdutos = produtoRepositorio
-			//	.ListarTodos()
-			//	.Select(x =>
-			//	{
-			//		return new ProdutoModel
-			//		{
-			//			Id = x.Id,
-			//			DataCadastro = x.DataCadastro,
-			//			Nome = x.Nome,
-			//			Preco = x.Preco
-			//		};
-			//	}).ToList();
-
-			//if (!string.IsNullOrEmpty(pesquisarProduto))
-			//{
-			//	listaDeProdutos = listaDeProdutos.Where(x => x.Nome.ToUpper().Contains(pesquisarProduto.ToUpper())).ToList();
-			//}
-
-			//switch (ordenarDados)
-			//{
-			//	case "nome_desc":
-			//		listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Nome).ToList();
-			//		break;
-
-			//	case "preco":
-			//		listaDeProdutos = listaDeProdutos.OrderBy(x => x.Preco).ToList();
-			//		break;
-
-			//	case "preco_desc":
-			//		listaDeProdutos = listaDeProdutos.OrderByDescending(x => x.Preco).ToList();
-			//		break;
-
-			//	default:
-			//		listaDeProdutos = listaDeProdutos.OrderBy(x => x.Nome).ToList();
-			//		break;
-			//}
-
-			var limitePaginas = 6;
 			return View();
-			//return View(Paginador<ProdutoModel>.CriarPaginacao(listaDeProdutos.AsQueryable(), numeroPaginas, limitePaginas));
 		}
 
 		[HttpGet]

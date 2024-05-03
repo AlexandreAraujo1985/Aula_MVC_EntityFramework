@@ -7,17 +7,18 @@ namespace Aula_MVC_EntityFramework.MVC.ViewComponents
 	public class TabelaDados : ViewComponent
 	{
 		private static ProdutoRepositorio produtoRepositorio;
-		private static ForncedorRepositorio forncedorRepositorio;
+		private static FornecedorRepositorio forncedorRepositorio;
 
 		public TabelaDados()
 		{
 			produtoRepositorio = new ProdutoRepositorio(new Repositorio.Contexto.ProdutoContext());
-			forncedorRepositorio = new ForncedorRepositorio(new Repositorio.Contexto.ProdutoContext());
+			forncedorRepositorio = new FornecedorRepositorio(new Repositorio.Contexto.ProdutoContext());
 		}
 
 		private Dictionary<string, Func<object>> tipoDeDados = new Dictionary<string, Func<object>>()
 		{
-			  { "Produto",  CriarDadosProduto},
+			  { "Produto",  CriarDadosProduto },
+			  { "Fornecedor", CriarDadosFornecedor }
 		};
 
 		public KeyValuePair<string, Func<object>> this[string tipo] =>
@@ -65,6 +66,26 @@ namespace Aula_MVC_EntityFramework.MVC.ViewComponents
 			}).ToList();
 
 			return listaDeProdutos;
+		}
+
+		private static List<TabelaDadosBaseModel> CriarDadosFornecedor()
+		{
+			var listaDeFornecedoresRepositorio = forncedorRepositorio.ListarTodos();
+
+			var listaDeFornecedores = listaDeFornecedoresRepositorio.Select(fornecedor =>
+			{
+				return new TabelaDadosBaseModel
+				{
+					Id = fornecedor.Id,
+					Itens = new Dictionary<string, string>
+					{
+						{ nameof(fornecedor.Nome), fornecedor.Nome.ToString() },
+						{ nameof(fornecedor.DataCadastro), fornecedor.DataCadastro.FormatarData() }
+					}
+				};
+			}).ToList();
+
+			return listaDeFornecedores;
 		}
 	}
 }
