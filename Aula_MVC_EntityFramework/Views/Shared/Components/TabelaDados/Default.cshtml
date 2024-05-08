@@ -31,11 +31,14 @@
 					{
 						<td>@item.Value	</td>
 					}
-					<td>
-						@Html.ActionLink("Editar", "Edit", new { id = obj.Id }) |
-						@Html.ActionLink("Detalhar", "Details", new { id = obj.Id }) |
-						@Html.ActionLink("Excluir", "Delete", new { id = obj.Id })
-					</td>
+					@if (obj.UtilizaLink)
+					{
+						<td>
+							@Html.ActionLink("Editar", "Edit", new { id = obj.Id }) |
+							@Html.ActionLink("Detalhar", "Details", new { id = obj.Id }) |
+							@Html.ActionLink("Excluir", "Delete", new { id = obj.Id })
+						</td>
+					}
 				</tr>
 			}
 		</tbody>

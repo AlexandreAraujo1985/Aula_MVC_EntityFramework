@@ -17,16 +17,26 @@ namespace Aula_MVC_EntityFramework.MVC.Contrllers
 		}
 
 		[HttpGet]
-		public IActionResult ProdutosEmPromocao()
+		public IActionResult ProdutosEmPromocao(string ordenarDados, string pesquisarProduto, int numeroPaginas = 1)
 		{
-			var produtosEmPromocao = produtoRepositorio
-				.ListarOsProdutosEmPromocao()
-				.Select(x =>
-				{
-					return new ProdutoModel { Id = x.Id, Nome = x.Nome, DataCadastro = x.DataCadastro, Preco = x.Preco };
-				}).ToList();
+			//var produtosEmPromocao = produtoRepositorio
+			//	.ListarOsProdutosEmPromocao()
+			//	.Select(x =>
+			//	{
+			//		return new ProdutoModel { Id = x.Id, Nome = x.Nome, DataCadastro = x.DataCadastro, Preco = x.Preco };
+			//	}).ToList();
 
-			return View(produtosEmPromocao);
+			//return View(produtosEmPromocao);
+
+			ViewData["NomeOrdenado"] = string.IsNullOrEmpty(ordenarDados) ? "nome_desc" : "";
+			ViewData["PrecoOrdenado"] = ordenarDados == "preco" ? "preco_desc" : "preco";
+			ViewData["NomeDoProduto"] = pesquisarProduto;
+
+			ViewData["NumeroPaginas"] = numeroPaginas;
+
+			ViewBag.Dados = new { OrdenarDados = ordenarDados, PesquisarProduto = pesquisarProduto };
+
+			return View();
 		}
 
 		[HttpGet]

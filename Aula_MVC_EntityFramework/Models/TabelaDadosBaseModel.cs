@@ -3,6 +3,7 @@
 	public class TabelaDadosBaseModel
 	{
 		public int Id { get; set; }
-		public Dictionary<string, string> Itens { get; set; }
+        public bool UtilizaLink { get; set; }
+        public Dictionary<string, string> Itens { get; set; }
 	}
 }

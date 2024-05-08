@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.MVC", "Aula_MVC_EntityFramework\Aula_MVC_EntityFramework.MVC.csproj", "{752DDECA-0DC0-41CC-B508-FA0811341813}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.Repositorio", "Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repositorio.csproj", "{9112209B-606A-4598-B5FC-636FCA5DDEFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.Repository", "Aula_MVC_EntityFramework.Repositorio\Aula_MVC_EntityFramework.Repository.csproj", "{9112209B-606A-4598-B5FC-636FCA5DDEFA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aula_MVC_EntityFramework.API", "Aula_MVC_EntityFramework.API\Aula_MVC_EntityFramework.API.csproj", "{9AF9CCB7-A3D7-40FE-A584-F0B3237FAF91}"
 EndProject
