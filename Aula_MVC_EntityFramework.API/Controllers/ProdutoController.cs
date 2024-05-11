@@ -1,72 +1,77 @@
 ﻿using Aula_MVC_EntityFramework.API.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aula_MVC_EntityFramework.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProdutoController : Controller
-    {
-        [HttpGet]
-        public IActionResult ListarProdutos()
-        {
-            return Ok(new[] { new { Id = 1, Nome = "Lápis" }, new { Id = 2, Nome = "Caneta" } });
-        }
+	[ApiController]
+	[Route("api/[controller]")]
+	public class ProdutoController : Controller
+	{
+		[HttpGet]
+		[Authorize(Roles = "promocao")]
+		//public async Task<IActionResult> ListarProdutos()
+		public IActionResult ListarProdutos()
+		{
+			var produtos = new[] { new { Id = 1, Nome = "Lápis" }, new { Id = 2, Nome = "Caneta" } };
 
-        [HttpGet("{id}")]
-        public IActionResult ObterProduto(int id)
-        {
-            var produto = new[] { new { Id = 1, Nome = "Lápis" }, new { Id = 2, Nome = "Caneta" } }
-            .ToList().FirstOrDefault(x => x.Id == id);
+			return Ok(produtos);
+		}
 
-            if (produto == null)
-                return BadRequest();
+		[HttpGet("{id}")]
+		public IActionResult ObterProduto(int id)
+		{
+			var produto = new[] { new { Id = 1, Nome = "Lápis" }, new { Id = 2, Nome = "Caneta" } }
+			.ToList().FirstOrDefault(x => x.Id == id);
 
-            return Ok(produto);
-        }
+			if (produto == null)
+				return BadRequest();
 
-        [HttpPost]
-        public IActionResult IncluirProduto([FromBody] ProdutoModel produto)
-        {
-            return Created("", produto);
-        }
+			return Ok(produto);
+		}
 
-        //Para alterar todos os dados 
-        [HttpPut]
-        public IActionResult AlterarProdutoTodosOsCampos([FromBody] ProdutoModel produto)
-        {
-            new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } }
-           .ToList().ForEach(x =>
-           {
-               x.Id = produto.Id;
-               x.Nome = produto.Nome;
-               x.Preco = produto.Preco;
-           });
-            return Ok(produto);
-        }
+		[HttpPost]
+		public IActionResult IncluirProduto([FromBody] ProdutoModel produto)
+		{
+			return Created("", produto);
+		}
 
-        //Para alterar Parcialmente
-        [HttpPatch]
-        public IActionResult AlterarProdutoPreco([FromBody] ProdutoModel produto)
-        {
-            new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } }
-            .ToList().ForEach(x =>
-            {
-                x.Preco = x.Preco;
-            });
-            return Ok(produto);
-        }
+		//Para alterar todos os dados 
+		[HttpPut]
+		public IActionResult AlterarProdutoTodosOsCampos([FromBody] ProdutoModel produto)
+		{
+			new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } }
+		   .ToList().ForEach(x =>
+		   {
+			   x.Id = produto.Id;
+			   x.Nome = produto.Nome;
+			   x.Preco = produto.Preco;
+		   });
+			return Ok(produto);
+		}
 
-        [HttpDelete("{id}")]
-        public IActionResult ExcluirProduto(int id)
-        {
-            var produtos = new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } };
+		//Para alterar Parcialmente
+		[HttpPatch]
+		public IActionResult AlterarProdutoPreco([FromBody] ProdutoModel produto)
+		{
+			new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } }
+			.ToList().ForEach(x =>
+			{
+				x.Preco = x.Preco;
+			});
+			return Ok(produto);
+		}
 
-            var produto = produtos.FirstOrDefault(x => x.Id == id);
+		[HttpDelete("{id}")]
+		public IActionResult ExcluirProduto(int id)
+		{
+			var produtos = new ProdutoModel[] { new ProdutoModel { Id = 1, Nome = "Lápis" }, new ProdutoModel { Id = 2, Nome = "Caneta" } };
 
-            produtos.ToList().Remove(produto);
+			var produto = produtos.FirstOrDefault(x => x.Id == id);
 
-            return Ok("Produto excluído");
-        }
-    }
+			produtos.ToList().Remove(produto);
+
+			return Ok("Produto excluído");
+		}
+	}
 }
